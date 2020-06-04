@@ -1,6 +1,20 @@
-import { Controller, Get, Param, NotFoundException, Post, Body, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  NotFoundException,
+  Post,
+  Body,
+  Delete,
+  UploadedFile,
+  UseInterceptors,
+  UploadedFiles,
+} from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductEntity } from 'src/entities/product.entity';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import {diskStorage}from 'multer'
+import {extname} from 'path'
 
 @Controller('products')
 export class ProductController {
@@ -29,18 +43,32 @@ export class ProductController {
 
     return { productList: { listProducts } };
   }
-
-  @Post('/')
-  async createProduct(@Body() ProductEntity: ProductEntity){
-
-    return this.productService.createProduct(ProductEntity)
-
+  
+  @Post()
+  @UseInterceptors(FilesInterceptor('files', 20 ,{
+    storage: diskStorage({
+      destination: './tmp/files'
+      , filename: (req, file, cb) => {
+        const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+        cb(null, `${randomName}${extname(file.originalname)}`)
+      }
+    })
+  }))
+  async createProduct(@UploadedFiles() files, @Body() ProductEntity: ProductEntity) {
+    const response = [];
+      files.forEach(file => {
+        const fileReponse = {
+          url: file.filename,
+        };
+        response.push(fileReponse);
+      });
+      ProductEntity.imgPaths = response
+      console.log(ProductEntity)
+      return this.productService.createProduct(ProductEntity);
   }
-
 
   @Delete('/:id')
-  async deleteProduct(@Param() id){
-    return this.productService.deleteProduct(id)
+  async deleteProduct(@Param() id) {
+    return this.productService.deleteProduct(id);
   }
-  
 }
