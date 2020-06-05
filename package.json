@@ -29,6 +29,7 @@
     "@nestjs/typeorm": "^7.0.0",
     "@types/passport": "^1.0.3",
     "@types/passport-jwt": "^3.0.3",
+    "@types/slug": "^0.9.1",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.12.2",
@@ -41,6 +42,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5",
+    "slug": "^3.3.0",
     "typeorm": "^0.2.24"
   },
   "devDependencies": {

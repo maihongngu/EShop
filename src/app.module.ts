@@ -8,6 +8,9 @@ import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
 import { CategoryController } from './category/category.controller';
 import { CategoryModule } from './category/category.module';
+import { ArticleService } from './article/article.service';
+import { ArticleController } from './article/article.controller';
+import { ArticleModule } from './article/article.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -17,8 +20,9 @@ import { CategoryModule } from './category/category.module';
     UserModule,
     ProductModule,
     CategoryModule,
+    ArticleModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, ArticleController],
   providers: [AppService],
 })
 export class AppModule {}

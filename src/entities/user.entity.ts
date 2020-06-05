@@ -1,8 +1,10 @@
 import { AbstractEntity } from './abtract-entity';
-import { Entity, Column, BeforeInsert, JoinTable, ManyToMany } from 'typeorm';
+import { Entity, Column, BeforeInsert, JoinTable, ManyToMany, OneToMany, JoinColumn } from 'typeorm';
 import { IsEmail } from 'class-validator';
 import { Exclude, classToPlain } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
+import { ArticleEntity } from './article.entity';
+import { type } from 'os';
 
 @Entity('users')
 export class UserEntity extends AbstractEntity {
@@ -15,13 +17,20 @@ export class UserEntity extends AbstractEntity {
 
   @Column()
   @Exclude()
-  password: string;
+  password: string
 
   @Column({ default: '' })
-  bio: string;
+  bio: string
 
   @Column({ default: null, nullable: true })
-  image: string | null;
+  image: string | null
+
+  @OneToMany(type => ArticleEntity, article => article.author)
+  articles: ArticleEntity[]
+
+  @ManyToMany(type => ArticleEntity, article => article.favoritedBy)
+  @JoinColumn()
+  favorites: ArticleEntity[]
 
   @ManyToMany(
     type => UserEntity,
@@ -34,15 +43,15 @@ export class UserEntity extends AbstractEntity {
     type => UserEntity,
     user => user.followers,
   )
-  following: UserEntity[];
+  following: UserEntity[]
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password, 10);
+    this.password = await bcrypt.hash(this.password, 10)
   }
 
   async comparePassword(attemp: string) {
-    return await bcrypt.compare(attemp, this.password);
+    return await bcrypt.compare(attemp, this.password)
   }
 
   toJSON() {
