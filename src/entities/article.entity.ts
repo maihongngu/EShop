@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Entity, Column, BeforeInsert, ManyToOne, ManyToMany, JoinColumn, RelationCount } from 'typeorm';
+import { PrimaryGeneratedColumn, Entity, Column, BeforeInsert, ManyToOne, ManyToMany, JoinColumn, RelationCount, JoinTable } from 'typeorm';
 import { AbstractEntity } from './abtract-entity';
 import * as slugify from 'slug';
 import { UserEntity } from './user.entity';
@@ -18,7 +18,7 @@ export class ArticleEntity extends AbstractEntity {
   body: string;
 
   @ManyToMany(type => UserEntity, user => user.favorites, {eager:true})
-  @JoinColumn()
+  @JoinTable()
   favoritedBy: UserEntity[]
 
   @RelationCount((article: ArticleEntity) => article.favoritedBy)

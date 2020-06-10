@@ -15,7 +15,9 @@ import { ProductEntity } from 'src/entities/product.entity';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import {diskStorage}from 'multer'
 import {extname} from 'path'
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Product')
 @Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}

@@ -14,7 +14,7 @@ export class DatabaseConnectionService implements TypeOrmOptionsFactory {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_DB,
       entities: ['dist/**/*.entity.js'],
-      dropSchema: true,
+      dropSchema: false,
       logging: true,
       synchronize: true,
     };

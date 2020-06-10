@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, UseGuards, Delete, Param, Put } from '@nes
 import { CategoryService } from './category.service';
 import { CategoryEntity } from 'src/entities/category.entity';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Categories')
 @Controller('categories')
 export class CategoryController {
 

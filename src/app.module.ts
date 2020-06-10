@@ -21,8 +21,7 @@ import { ArticleModule } from './article/article.module';
     ProductModule,
     CategoryModule,
     ArticleModule,
-  ],
-  controllers: [AppController, ArticleController],
-  providers: [AppService],
+  ]
+
 })
 export class AppModule {}

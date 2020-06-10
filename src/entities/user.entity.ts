@@ -4,7 +4,6 @@ import { IsEmail } from 'class-validator';
 import { Exclude, classToPlain } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
 import { ArticleEntity } from './article.entity';
-import { type } from 'os';
 
 @Entity('users')
 export class UserEntity extends AbstractEntity {
